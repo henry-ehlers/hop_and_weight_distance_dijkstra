@@ -5,21 +5,22 @@ class AdjacencyMap {
     }
     ;
     addEdge(edge) {
-        this.addVertexPair(edge.source, edge.target);
-        this.addVertexPair(edge.target, edge.source);
+        this.addVertexPair(edge.source, edge.target, edge.weight);
+        this.addVertexPair(edge.target, edge.source, edge.weight);
     }
     ;
-    addVertexPair(vertex_a, vertex_b) {
-        if (this.map.has(vertex_a)) {
-            this.map.get(vertex_a).push(vertex_b);
-        }
-        else {
-            this.map.set(vertex_a, [vertex_b]);
+    addVertexPair(a, b, w) {
+        if (!this.map.has(a)) {
+            this.map.set(a, new Map());
         }
         ;
+        this.map.get(a).set(b, w);
     }
     getVertexAdjacency(vertex) {
-        return (this.map.has(vertex) ? this.map.get(vertex) : []);
+        return (this.map.has(vertex) ? [...this.map.get(vertex).keys()] : []);
+    }
+    getNodes() {
+        return ([...this.map.keys()]);
     }
 }
 class Edge {
@@ -37,6 +38,9 @@ class Edge {
         return this._TARGET;
     }
     ;
+    get weight() {
+        return this._WEIGHT;
+    }
 }
 ;
 class Vertex {
@@ -75,7 +79,8 @@ class Graph {
     constructor() {
         this.vertices = new Map();
         this.edges = [];
-        let edges = [
+        // Temporary Hardcoding of edge list because file and module loading is such a pain in the ass
+        let edgeList = [
             { "source": "0", "target": "1", "weight": 1 },
             { "source": "0", "target": "5", "weight": 1 },
             { "source": "0", "target": "3", "weight": 1 },
@@ -84,26 +89,24 @@ class Graph {
             { "source": "3", "target": "4", "weight": 1 },
             { "source": "4", "target": "5", "weight": 1 }
         ];
-        let unfilteredNodes = [];
         let adjacency = new AdjacencyMap();
-        for (const e of edges) {
+        for (const e of edgeList) {
             const edge = new Edge(e.source, e.target, e.weight);
-            unfilteredNodes.push(edge.source, edge.target);
             adjacency.addEdge(edge);
-            this.edges.push(edge);
         }
-        console.log(this.edges);
-        let nodeList = new Set(unfilteredNodes);
-        console.log(nodeList);
+        console.log(adjacency);
+        let nodeList = adjacency.getNodes();
         for (const n of nodeList) {
-            console.log(n);
+            console.log(n + " - " + adjacency.getVertexAdjacency(n));
             let vertex = new Vertex(n, adjacency.getVertexAdjacency(n));
-            console.log(vertex);
             this.vertices.set(n, vertex);
         }
-        console.log(this.vertices);
     }
     ;
+    dijkstra(ego, maxHop = Number.MAX_VALUE) {
+        // initialize helper variables
+        // 
+    }
 }
 ;
 let graph = new Graph();
