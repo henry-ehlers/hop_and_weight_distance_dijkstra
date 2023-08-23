@@ -90,8 +90,8 @@ class Vertex {
 
 class Graph{
 
+    private adjacency: AdjacencyMap = new AdjacencyMap();
     private vertices: Map<string, Vertex> = new Map();
-    private edges: Array<Edge> = [];
     // private alters: Map< Number, Array<T> >;
 
     constructor () {
@@ -106,17 +106,16 @@ class Graph{
             {"source": "3", "target": "4", "weight": 1}, 
             {"source": "4", "target": "5", "weight": 1}
         ];
-        let adjacency: AdjacencyMap = new AdjacencyMap();
+
+        // Create Adjacency Map, i.e. symmetrical adjacency matrix in nested hashmap form 
         for (const e of edgeList) {
             const edge: Edge = new Edge(e.source, e.target, e.weight);
-            adjacency.addEdge(edge);
+            this.adjacency.addEdge(edge);
         }
-        console.log(adjacency);
 
-        let nodeList = adjacency.getNodes();
-        for (const n of nodeList) {
-            console.log(n + " - " + adjacency.getVertexAdjacency(n))
-            let vertex: Vertex = new Vertex(n, adjacency.getVertexAdjacency(n));
+        // Create NodeMap, i.e. a hasmap of vertex objects to contain dijkstra-data
+        for (const n of this.adjacency.getNodes()) {
+            let vertex: Vertex = new Vertex(n, this.adjacency.getVertexAdjacency(n));
             this.vertices.set(n, vertex);
         }
     
