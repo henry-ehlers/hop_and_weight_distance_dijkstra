@@ -1,5 +1,10 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
+//require('fs')
+const fs_1 = __importDefault(require("fs"));
 class DijkstraDistances {
     constructor(source, nodes) {
         this.weighted = new Map();
@@ -184,6 +189,12 @@ class Graph {
     writeVerticesToJSON() {
         let jsonData = [];
         [...this.vertices.keys()].forEach(d => jsonData.push(JSON.stringify(this.vertices.get(d))));
+        fs_1.default.writeFile("test.txt", jsonData.toString(), function (err) {
+            if (err) {
+                console.log(err);
+            }
+            ;
+        });
     }
     ;
     get egocenter() {

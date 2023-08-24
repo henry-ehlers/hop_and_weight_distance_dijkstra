@@ -1,4 +1,5 @@
-import { json } from "d3";
+//require('fs')
+import fs from 'fs';
 
 class DijkstraDistances {
 
@@ -212,6 +213,11 @@ class Graph{
     public writeVerticesToJSON () : void {
         let jsonData: Array<string> = [];
         [...this.vertices.keys()].forEach(d => jsonData.push(JSON.stringify(this.vertices.get(d))));
+        fs.writeFile("test.txt", jsonData.toString(), function(err) {
+            if (err) {
+                console.log(err);
+            };
+        });
     };
 
     public get egocenter() : string {
