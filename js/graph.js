@@ -1,5 +1,61 @@
 "use strict";
+class DijkstraDistances {
+    constructor(source, nodes) {
+        this.weighted = new Map();
+        this.hop = new Map();
+        this.parents = new Map;
+        nodes.forEach(d => d == source ? this.hop.set(d, 0) : this.hop.set(d, Number.MAX_SAFE_INTEGER));
+        nodes.forEach(d => d == source ? this.weighted.set(d, 0) : this.weighted.set(d, Number.MAX_VALUE));
+        nodes.forEach(d => d == source ? this.parents.set(d, d) : this.parents.set(d, undefined));
+        this.unvisited = new Set(this.hop.keys());
+    }
+    ;
+    visitVertex(vertex) {
+        this.unvisited.delete(vertex);
+        console.log(this.unvisited);
+    }
+    ;
+    returnClosestVertex() {
+        // TODO: allow for ties and break them with shortest weighted distance
+        if (this.unvisited.size > 0) {
+            const closest = Array.from(this.unvisited).reduce((key, v) => this.hop.get(v) < this.hop.get(key) ? v : key);
+            this.visitVertex(closest);
+            return (closest);
+        }
+        return (undefined);
+    }
+    ;
+    addDistance(current, neighbor, weight) {
+        const newWeighted = this.weighted.get(current) + weight;
+        const newHop = this.hop.get(current) + 1;
+        if ((newHop > this.hop.get(neighbor))) {
+            return;
+        }
+        else if ((newHop < this.hop.get(neighbor))) {
+            this.hop.set(neighbor, newHop);
+            this.weighted.set(neighbor, newWeighted);
+            this.parents.set(neighbor, current);
+        }
+        else if (newWeighted < this.weighted.get(current)) {
+            this.hop.set(neighbor, newHop);
+            this.weighted.set(neighbor, newWeighted);
+            this.parents.set(neighbor, current);
+        }
+    }
+    ;
+    get unvistedVertices() {
+        return (this.unvisited);
+    }
+    ;
+    get hopDistances() {
+        return (this.hop);
+    }
+    get weightedDistances() {
+        return (this.weighted);
+    }
+}
 class AdjacencyMap {
+    ;
     constructor() {
         this.map = new Map();
     }
@@ -18,6 +74,9 @@ class AdjacencyMap {
     }
     getVertexAdjacency(vertex) {
         return (this.map.has(vertex) ? [...this.map.get(vertex).keys()] : []);
+    }
+    getVertexAdjacencyWights(vertex) {
+        return (this.map.has(vertex) ? this.map.get(vertex) : new Map());
     }
     getNodes() {
         return ([...this.map.keys()]);
@@ -45,40 +104,18 @@ class Edge {
 ;
 class Vertex {
     constructor(id, adjacency) {
-        this.hopDist = Number.MAX_VALUE;
-        this.weightDist = Number.MAX_VALUE;
         this._ID = id;
-        this._ADJACENCY = [...new Set(adjacency)];
-        this.parent = id; // technically empty, but unsure how to do so
     }
     ;
     get ID() {
         return this._ID;
     }
     ;
-    get adjacency() {
-        return this._ADJACENCY;
-    }
-    ;
-    get hopDistance() {
-        return this.hopDist;
-    }
-    ;
-    get weightedDistance() {
-        return this.weightDist;
-    }
-    ;
-    get parentVertex() {
-        return this.parent;
-    }
-    ;
 }
 ;
 class Graph {
-    // private alters: Map< Number, Array<T> >;
     constructor() {
-        this.vertices = new Map();
-        this.edges = [];
+        this.parents = new Map();
         // Temporary Hardcoding of edge list because file and module loading is such a pain in the ass
         let edgeList = [
             { "source": "0", "target": "1", "weight": 1 },
@@ -89,24 +126,49 @@ class Graph {
             { "source": "3", "target": "4", "weight": 1 },
             { "source": "4", "target": "5", "weight": 1 }
         ];
-        let adjacency = new AdjacencyMap();
+        //
+        this.ego = "0";
+        // Create Adjacency Map, i.e. symmetrical adjacency matrix in nested hashmap form 
+        this.adjacency = new AdjacencyMap();
         for (const e of edgeList) {
             const edge = new Edge(e.source, e.target, e.weight);
-            adjacency.addEdge(edge);
+            this.adjacency.addEdge(edge);
         }
-        console.log(adjacency);
-        let nodeList = adjacency.getNodes();
-        for (const n of nodeList) {
-            console.log(n + " - " + adjacency.getVertexAdjacency(n));
-            let vertex = new Vertex(n, adjacency.getVertexAdjacency(n));
+        // Create NodeMap, i.e. a hasmap of vertex objects to contain dijkstra-data
+        this.vertices = new Map();
+        for (const n of this.adjacency.getNodes()) {
+            let vertex = new Vertex(n, this.adjacency.getVertexAdjacency(n));
             this.vertices.set(n, vertex);
         }
+        // Initialize distances
+        this.distances = new DijkstraDistances(this.ego, new Set(this.vertices.keys()));
+        console.log(this.distances);
     }
     ;
-    dijkstra(ego, maxHop = Number.MAX_VALUE) {
+    dijkstra(maxHop = Number.MAX_VALUE) {
+        let current = this.distances.returnClosestVertex();
         // initialize helper variables
-        // 
+        while (current) {
+            console.log(current);
+            // get adjacency of closest node
+            const neighbors = this.adjacency.getVertexAdjacencyWights(current);
+            console.log(neighbors);
+            //
+            for (const [neighbor, weight] of neighbors.entries()) {
+                this.distances.addDistance(current, neighbor, weight);
+            }
+            //
+            console.log(this.distances.unvistedVertices);
+            current = this.distances.returnClosestVertex();
+        }
+        ;
+        console.log(this.distances.hopDistances);
+    }
+    ;
+    get egocenter() {
+        return this.ego;
     }
 }
 ;
 let graph = new Graph();
+graph.dijkstra();
