@@ -1,4 +1,5 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 class DijkstraDistances {
     constructor(source, nodes) {
         this.weighted = new Map();
@@ -12,7 +13,6 @@ class DijkstraDistances {
     ;
     visitVertex(vertex) {
         this.unvisited.delete(vertex);
-        console.log(this.unvisited);
     }
     ;
     returnClosestVertex() {
@@ -50,8 +50,17 @@ class DijkstraDistances {
     get hopDistances() {
         return (this.hop);
     }
+    ;
     get weightedDistances() {
         return (this.weighted);
+    }
+    ;
+    returnVertexHopDistances(vertex) {
+        return (this.hop.get(vertex));
+    }
+    ;
+    returnVertexWeightedDistances(vertex) {
+        return (this.weighted.get(vertex));
     }
 }
 class AdjacencyMap {
@@ -75,7 +84,7 @@ class AdjacencyMap {
     getVertexAdjacency(vertex) {
         return (this.map.has(vertex) ? [...this.map.get(vertex).keys()] : []);
     }
-    getVertexAdjacencyWights(vertex) {
+    getVertexAdjacencyWeights(vertex) {
         return (this.map.has(vertex) ? this.map.get(vertex) : new Map());
     }
     getNodes() {
@@ -104,9 +113,17 @@ class Edge {
 ;
 class Vertex {
     constructor(id, adjacency) {
+        this.egocenter = undefined;
+        this.hopDistance = undefined;
+        this.weightedDistance = undefined;
         this._ID = id;
     }
     ;
+    setEgocentricDistances(ego, hop, weighted) {
+        this.egocenter = ego;
+        this.hopDistance = hop;
+        this.weightedDistance = weighted;
+    }
     get ID() {
         return this._ID;
     }
@@ -115,7 +132,6 @@ class Vertex {
 ;
 class Graph {
     constructor() {
-        this.parents = new Map();
         // Temporary Hardcoding of edge list because file and module loading is such a pain in the ass
         let edgeList = [
             { "source": "0", "target": "1", "weight": 1 },
@@ -126,7 +142,7 @@ class Graph {
             { "source": "3", "target": "4", "weight": 1 },
             { "source": "4", "target": "5", "weight": 1 }
         ];
-        //
+        // Hardcode egocenter
         this.ego = "0";
         // Create Adjacency Map, i.e. symmetrical adjacency matrix in nested hashmap form 
         this.adjacency = new AdjacencyMap();
@@ -142,27 +158,32 @@ class Graph {
         }
         // Initialize distances
         this.distances = new DijkstraDistances(this.ego, new Set(this.vertices.keys()));
-        console.log(this.distances);
     }
     ;
-    dijkstra(maxHop = Number.MAX_VALUE) {
+    dijkstra() {
+        // Calculcate minimum distances to ego using dijkstra
         let current = this.distances.returnClosestVertex();
-        // initialize helper variables
         while (current) {
-            console.log(current);
-            // get adjacency of closest node
-            const neighbors = this.adjacency.getVertexAdjacencyWights(current);
-            console.log(neighbors);
-            //
+            const neighbors = this.adjacency.getVertexAdjacencyWeights(current);
             for (const [neighbor, weight] of neighbors.entries()) {
                 this.distances.addDistance(current, neighbor, weight);
             }
-            //
-            console.log(this.distances.unvistedVertices);
+            ;
             current = this.distances.returnClosestVertex();
         }
         ;
-        console.log(this.distances.hopDistances);
+        // Save Hop and Weighted Distances to Ego in Vertices
+        for (const [id, vertex] of this.vertices.entries()) {
+            const hop = this.distances.returnVertexHopDistances(id);
+            const weighted = this.distances.returnVertexWeightedDistances(id);
+            vertex.setEgocentricDistances(this.ego, hop, weighted);
+        }
+        ;
+    }
+    ;
+    writeVerticesToJSON() {
+        let jsonData = [];
+        [...this.vertices.keys()].forEach(d => jsonData.push(JSON.stringify(this.vertices.get(d))));
     }
     ;
     get egocenter() {
@@ -172,3 +193,4 @@ class Graph {
 ;
 let graph = new Graph();
 graph.dijkstra();
+graph.writeVerticesToJSON();

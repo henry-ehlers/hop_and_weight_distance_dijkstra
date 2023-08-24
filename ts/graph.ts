@@ -1,3 +1,5 @@
+import { json } from "d3";
+
 class DijkstraDistances {
 
     private weighted = new Map<string, number>();
@@ -14,7 +16,6 @@ class DijkstraDistances {
 
     private visitVertex(vertex: string) {
         this.unvisited.delete(vertex);
-        console.log(this.unvisited)
     };
 
     public returnClosestVertex(): string | undefined {
@@ -51,10 +52,18 @@ class DijkstraDistances {
 
     public get hopDistances() {
         return (this.hop);
-    }
+    };
 
     public get weightedDistances() {
         return (this.weighted);
+    };
+
+    public returnVertexHopDistances(vertex: string): number {
+        return (this.hop.get(vertex)!);
+    };
+
+    public returnVertexWeightedDistances(vertex: string): number {
+        return (this.weighted.get(vertex)!);
     }
 }
 
@@ -80,7 +89,7 @@ class AdjacencyMap {
         return( this.map.has(vertex) ? [...this.map.get(vertex)!.keys()] : [] );
     }
 
-    public getVertexAdjacencyWights(vertex: string): Map<string, number> {
+    public getVertexAdjacencyWeights(vertex: string): Map<string, number> {
         return( this.map.has(vertex) ? this.map.get(vertex)! : new Map() );
     }
 
@@ -117,10 +126,19 @@ class Edge {
 class Vertex { 
 
     private readonly _ID: string;
+    private egocenter: string | undefined = undefined;
+    private hopDistance: number | undefined = undefined;
+    private weightedDistance: number | undefined = undefined;
 
     constructor(id: string, adjacency: Array<string>) {
         this._ID = id;
     };
+
+    public setEgocentricDistances(ego: string, hop: number, weighted: number) {
+        this.egocenter = ego;
+        this.hopDistance = hop;
+        this.weightedDistance = weighted;
+    }
 
     public get ID() {
         return this._ID;
@@ -134,7 +152,6 @@ class Graph{
     private adjacency: AdjacencyMap;
     private vertices: Map<string, Vertex>;
     private distances: DijkstraDistances;
-    private parents: Map<string, string> = new Map();
 
     constructor () {
 
@@ -149,7 +166,7 @@ class Graph{
             {"source": "4", "target": "5", "weight": 1}
         ];
 
-        //
+        // Hardcode egocenter
         this.ego = "0";
 
         // Create Adjacency Map, i.e. symmetrical adjacency matrix in nested hashmap form 
@@ -168,38 +185,36 @@ class Graph{
 
         // Initialize distances
         this.distances = new DijkstraDistances(this.ego, new Set(this.vertices.keys()));
-        console.log(this.distances)
     
     };
 
-    public dijkstra(maxHop: number = Number.MAX_VALUE): void {
+    public dijkstra(): void {
         
+        // Calculcate minimum distances to ego using dijkstra
         let current: string | undefined = this.distances.returnClosestVertex();
-
-        // initialize helper variables
         while (current) {
-
-            console.log(current)
-
-            // get adjacency of closest node
-            const neighbors = this.adjacency.getVertexAdjacencyWights(current);
-            console.log(neighbors);
-
-            //
+            const neighbors = this.adjacency.getVertexAdjacencyWeights(current);
             for ( const [neighbor, weight] of neighbors.entries() ) {
                 this.distances.addDistance(current, neighbor, weight);
-            }
-
-            //
-            console.log(this.distances.unvistedVertices)
+            };
             current = this.distances.returnClosestVertex();
-
         };
 
-        console.log(this.distances.hopDistances);
+        // Save Hop and Weighted Distances to Ego in Vertices
+        for ( const [id, vertex] of this.vertices.entries() ) {
+            const hop = this.distances.returnVertexHopDistances(id);
+            const weighted = this.distances.returnVertexWeightedDistances(id);
+            vertex.setEgocentricDistances(this.ego, hop, weighted);
+        };
+
     };
 
-    public get egocenter() {
+    public writeVerticesToJSON () : void {
+        let jsonData: Array<string> = [];
+        [...this.vertices.keys()].forEach(d => jsonData.push(JSON.stringify(this.vertices.get(d))));
+    };
+
+    public get egocenter() : string {
         return this.ego
     }
 
@@ -207,3 +222,4 @@ class Graph{
 
 let graph: Graph = new Graph();
 graph.dijkstra();
+graph.writeVerticesToJSON();
