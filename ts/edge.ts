@@ -5,9 +5,9 @@ export class Edge {
     private readonly _WEIGHT: number;
 
     constructor (source: string, target: string, weight: number) {
-        this._SOURCE = source;
-        this._TARGET = target;
-        this._WEIGHT = weight;
+        this._SOURCE = String(source);
+        this._TARGET = String(target);
+        this._WEIGHT = Number(weight);
     };
 
     public get source() {

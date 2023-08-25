@@ -7,12 +7,12 @@ class EgoMatrix {
         this.nodes = nodeList;
     }
     ;
-    sortNodes() {
-        this.nodes.sort(function (a, b) {
-            return ((a.weightedDistance + a.hopDistance) - (b.weightedDistance + b.hopDistance));
-        });
-    }
-    ;
+    // REPLACE WITH DIJKSTRA NODES
+    // sortNodes() {
+    //     this.nodes.sort(function(a, b) {
+    //         return (( a.weightedDistance+a.hopDistance ) - (b.weightedDistance+b.hopDistance  ));
+    //     });
+    // };
     get nodeList() {
         return (this.nodes);
     }

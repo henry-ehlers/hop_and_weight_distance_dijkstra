@@ -3,9 +3,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Edge = void 0;
 class Edge {
     constructor(source, target, weight) {
-        this._SOURCE = source;
-        this._TARGET = target;
-        this._WEIGHT = weight;
+        this._SOURCE = String(source);
+        this._TARGET = String(target);
+        this._WEIGHT = Number(weight);
     }
     ;
     get source() {

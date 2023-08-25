@@ -20,7 +20,7 @@ class JSONIO {
     ;
     static readObjectsFromJSON(file, path = ".") {
         const filePath = path + "/" + file;
-        let data = JSON.parse(fs_1.default.readFileSync(filePath).toString());
+        const data = JSON.parse(fs_1.default.readFileSync(filePath).toString());
         return (data);
     }
     ;

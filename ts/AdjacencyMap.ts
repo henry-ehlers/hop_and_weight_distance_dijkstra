@@ -1,4 +1,4 @@
-import { Edge } from "./edge";
+import { Edge } from "./Edge";
 
 export class AdjacencyMap {
 

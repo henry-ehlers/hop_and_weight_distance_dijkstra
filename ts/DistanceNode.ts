@@ -1,4 +1,4 @@
-export class DijkstraNode {
+export class DistanceNode {
 
     private readonly _ID: string;
     private readonly _EGO: string;

@@ -1,6 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const JSONIO_1 = require("./JSONIO");
-const data = JSONIO_1.JSONIO.readObjectsFromJSON("test.txt");
-console.log("DATA:");
-console.log(data);
+const Graph_1 = require("./Graph");
+const DistanceGraph_1 = require("./DistanceGraph");
+const data = JSONIO_1.JSONIO.readObjectsFromJSON("simple.json", "data");
+const graph = new Graph_1.Graph(data);
+const distanceGraph = new DistanceGraph_1.DistanceGraph(graph);
+distanceGraph.getDijkstraDistances("0");
+console.log(distanceGraph.getDistances("0"));
