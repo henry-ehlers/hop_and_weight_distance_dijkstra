@@ -1,5 +1,6 @@
-//require('fs')
 import fs from 'fs';
+import { Vertex } from "./vertex";
+import { Edge } from "./edge";
 
 class DijkstraDistances {
 
@@ -21,13 +22,14 @@ class DijkstraDistances {
 
     public returnClosestVertex(): string | undefined {
         // TODO: allow for ties and break them with shortest weighted distance
+        let closest: string | undefined;
         if (this.unvisited.size > 0) {
-            const closest = Array.from(this.unvisited).reduce((key, v) => this.hop.get(v)! < this.hop.get(key)! ? v : key);
+            closest = Array.from(this.unvisited).reduce((curr, min) => this.hop.get(min)! < this.hop.get(curr)! ? min : curr);
             this.visitVertex(closest);
-            return (closest);
+        } else {
+            closest = undefined;
         }
-        return (undefined);
-        
+        return (closest);
     };
 
     public addDistance(current: string, neighbor: string, weight: number): void {
@@ -47,15 +49,15 @@ class DijkstraDistances {
         }
     };
 
-    public get unvistedVertices() {
+    public get unvistedVertices(): Set<string> {
         return (this.unvisited);
     };
 
-    public get hopDistances() {
+    public get hopDistances(): Map<string, number> {
         return (this.hop);
     };
 
-    public get weightedDistances() {
+    public get weightedDistances(): Map<string, number> {
         return (this.weighted);
     };
 
@@ -98,54 +100,6 @@ class AdjacencyMap {
         return( [...this.map.keys()] );
     }
 }
-
-class Edge {
-
-    private readonly _SOURCE: string;
-    private readonly _TARGET: string;
-    private readonly _WEIGHT: number;
-
-    constructor (source: string, target: string, weight: number) {
-        this._SOURCE = source;
-        this._TARGET = target;
-        this._WEIGHT = weight;
-    };
-
-    public get source() {
-        return this._SOURCE;
-    };
-
-    public get target() {
-        return this._TARGET;
-    };
-
-    public get weight() {
-        return this._WEIGHT;
-    }
-};
-
-class Vertex { 
-
-    private readonly _ID: string;
-    private egocenter: string | undefined = undefined;
-    private hopDistance: number | undefined = undefined;
-    private weightedDistance: number | undefined = undefined;
-
-    constructor(id: string, adjacency: Array<string>) {
-        this._ID = id;
-    };
-
-    public setEgocentricDistances(ego: string, hop: number, weighted: number) {
-        this.egocenter = ego;
-        this.hopDistance = hop;
-        this.weightedDistance = weighted;
-    }
-
-    public get ID() {
-        return this._ID;
-    };
-
-};
 
 class Graph{
 
