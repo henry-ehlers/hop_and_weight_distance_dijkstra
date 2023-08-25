@@ -1,1 +1,6 @@
-{"egocenter":"0","hopDistance":0,"weightedDistance":0,"_ID":"0"},{"egocenter":"0","hopDistance":1,"weightedDistance":1,"_ID":"1"},{"egocenter":"0","hopDistance":1,"weightedDistance":1,"_ID":"5"},{"egocenter":"0","hopDistance":1,"weightedDistance":1,"_ID":"3"},{"egocenter":"0","hopDistance":2,"weightedDistance":2,"_ID":"2"},{"egocenter":"0","hopDistance":2,"weightedDistance":2,"_ID":"4"}
+{"egocenter":"0","hopDistance":0,"weightedDistance":0,"ID":"0"},
+{"egocenter":"0","hopDistance":1,"weightedDistance":1,"ID":"1"},
+{"egocenter":"0","hopDistance":1,"weightedDistance":1,"ID":"5"},
+{"egocenter":"0","hopDistance":1,"weightedDistance":1,"ID":"3"},
+{"egocenter":"0","hopDistance":2,"weightedDistance":2,"ID":"2"},
+{"egocenter":"0","hopDistance":2,"weightedDistance":2,"ID":"4"}

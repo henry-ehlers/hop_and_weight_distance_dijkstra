@@ -14,8 +14,15 @@ class EgoMatrix {
     };
 
     sortNodes() {
-        
+        this.nodes.sort(function(a, b) {
+            return (( a.weightedDistance+a.hopDistance ) - (b.weightedDistance+b.hopDistance  ));
+        });
+    };
+
+    public get nodeList(): Array<Vertex> {
+        return(this.nodes);
     }
 
+    plot() {};
 
 }

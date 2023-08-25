@@ -13,22 +13,24 @@ export class Vertex {
         this.ego = ego;
         this.hop = hop;
         this.weighted = weighted;
-    }
+    };
 
     public get ID() {
         return this._ID;
     };
 
-    public get weightedDistance(): number | undefined {
-        return (this.weighted);
-    }
+    public get weightedDistance(): number {
+        // todo write better logic to handle the undefined case 
+        return (Number(this.weighted));
+    };
 
-    public get hopDistance(): number | undefined {
-        return (this.hop);
-    }
+    public get hopDistance(): number {
+        // todo write better logic to handle the undefined case 
+        return (Number(this.hop));
+    };
 
-    public get egocenter(): string | undefined {
-        return (this.ego);
-    }
+    public get egocenter(): string {
+        return (String(this.ego));
+    };
 
 };

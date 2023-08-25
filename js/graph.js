@@ -1,10 +1,7 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-//require('fs')
-const fs_1 = __importDefault(require("fs"));
+const vertex_1 = require("./vertex");
+const edge_1 = require("./edge");
 class DijkstraDistances {
     constructor(source, nodes) {
         this.weighted = new Map();
@@ -22,12 +19,15 @@ class DijkstraDistances {
     ;
     returnClosestVertex() {
         // TODO: allow for ties and break them with shortest weighted distance
+        let closest;
         if (this.unvisited.size > 0) {
-            const closest = Array.from(this.unvisited).reduce((key, v) => this.hop.get(v) < this.hop.get(key) ? v : key);
+            closest = Array.from(this.unvisited).reduce((curr, min) => this.hop.get(min) < this.hop.get(curr) ? min : curr);
             this.visitVertex(closest);
-            return (closest);
         }
-        return (undefined);
+        else {
+            closest = undefined;
+        }
+        return (closest);
     }
     ;
     addDistance(current, neighbor, weight) {
@@ -96,45 +96,6 @@ class AdjacencyMap {
         return ([...this.map.keys()]);
     }
 }
-class Edge {
-    constructor(source, target, weight) {
-        this._SOURCE = source;
-        this._TARGET = target;
-        this._WEIGHT = weight;
-    }
-    ;
-    get source() {
-        return this._SOURCE;
-    }
-    ;
-    get target() {
-        return this._TARGET;
-    }
-    ;
-    get weight() {
-        return this._WEIGHT;
-    }
-}
-;
-class Vertex {
-    constructor(id, adjacency) {
-        this.egocenter = undefined;
-        this.hopDistance = undefined;
-        this.weightedDistance = undefined;
-        this._ID = id;
-    }
-    ;
-    setEgocentricDistances(ego, hop, weighted) {
-        this.egocenter = ego;
-        this.hopDistance = hop;
-        this.weightedDistance = weighted;
-    }
-    get ID() {
-        return this._ID;
-    }
-    ;
-}
-;
 class Graph {
     constructor() {
         // Temporary Hardcoding of edge list because file and module loading is such a pain in the ass
@@ -152,13 +113,13 @@ class Graph {
         // Create Adjacency Map, i.e. symmetrical adjacency matrix in nested hashmap form 
         this.adjacency = new AdjacencyMap();
         for (const e of edgeList) {
-            const edge = new Edge(e.source, e.target, e.weight);
+            const edge = new edge_1.Edge(e.source, e.target, e.weight);
             this.adjacency.addEdge(edge);
         }
         // Create NodeMap, i.e. a hasmap of vertex objects to contain dijkstra-data
         this.vertices = new Map();
         for (const n of this.adjacency.getNodes()) {
-            let vertex = new Vertex(n, this.adjacency.getVertexAdjacency(n));
+            let vertex = new vertex_1.Vertex(n, this.adjacency.getVertexAdjacency(n));
             this.vertices.set(n, vertex);
         }
         // Initialize distances
@@ -186,17 +147,6 @@ class Graph {
         ;
     }
     ;
-    writeVerticesToJSON() {
-        let jsonData = [];
-        [...this.vertices.keys()].forEach(d => jsonData.push(JSON.stringify(this.vertices.get(d))));
-        fs_1.default.writeFile("test.txt", jsonData.toString(), function (err) {
-            if (err) {
-                console.log(err);
-            }
-            ;
-        });
-    }
-    ;
     get egocenter() {
         return this.ego;
     }
@@ -204,4 +154,3 @@ class Graph {
 ;
 let graph = new Graph();
 graph.dijkstra();
-graph.writeVerticesToJSON();

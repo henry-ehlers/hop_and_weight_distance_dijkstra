@@ -164,16 +164,6 @@ class Graph{
 
     };
 
-    public writeVerticesToJSON () : void {
-        let jsonData: Array<string> = [];
-        [...this.vertices.keys()].forEach(d => jsonData.push(JSON.stringify(this.vertices.get(d))));
-        fs.writeFile("test.txt", jsonData.toString(), function(err) {
-            if (err) {
-                console.log(err);
-            };
-        });
-    };
-
     public get egocenter() : string {
         return this.ego
     }
@@ -182,4 +172,3 @@ class Graph{
 
 let graph: Graph = new Graph();
 graph.dijkstra();
-graph.writeVerticesToJSON();
