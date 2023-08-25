@@ -1,3 +1,5 @@
 import { JSONIO } from "./JSONIO";
 
-console.log(JSONIO.readObjectsFromJSON("test.txt"));
+const data = JSONIO.readObjectsFromJSON("test.txt");
+console.log("DATA:")
+console.log(data);

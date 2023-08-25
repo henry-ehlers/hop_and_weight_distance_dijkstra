@@ -12,7 +12,7 @@ class JSONIO {
         objects.forEach(d => jsonData.push(JSON.stringify(d)));
         fs_1.default.writeFile(filePath, jsonData.toString(), function (err) {
             if (err) {
-                console.log(err);
+                throw (err);
             }
             ;
         });
@@ -20,14 +20,7 @@ class JSONIO {
     ;
     static readObjectsFromJSON(file, path = ".") {
         const filePath = path + "/" + file;
-        let data;
-        fs_1.default.readFile(filePath, function (error, JSONdata) {
-            if (error) {
-                throw error;
-            }
-            ;
-            data = JSON.parse(JSONdata.toString());
-        });
+        let data = JSON.parse(fs_1.default.readFileSync(filePath).toString());
         return (data);
     }
     ;
