@@ -1,11 +1,11 @@
 import fs from 'fs';
-import { Vertex } from "./vertex";
+import { Node } from "./Node";
 import { Edge } from "./edge";
 
 export class Graph{
 
     private edges: Array<Edge> = [];
-    private nodes: Array<Vertex> = [];
+    private nodes: Array<Node> = [];
 
     constructor () {
 
@@ -23,11 +23,11 @@ export class Graph{
         // Create Adjacency Map, i.e. symmetrical adjacency matrix in nested hashmap form 
         edgeList.forEach(e => this.edges.push(new Edge(e.source, e.target, e.weight)));
         const nodeList = Array.from(new Set(this.edges.map(e => (e.source, e.target))));
-        nodeList.forEach(n => this.nodes.push(new Vertex(n)));
+        nodeList.forEach(n => this.nodes.push(new Node(n)));
     
     };
 
-    public get Nodes(): Array<Vertex> {
+    public get Nodes(): Array<Node> {
         return this.nodes;
     }
 

@@ -1,5 +1,5 @@
 import d3 from 'd3';
-import { Vertex } from "./vertex";
+import { Vertex } from "./Node";
 import { Edge } from "./edge";
 
 // todo: extend prototype / abstract class with key properties across visualization approaches
