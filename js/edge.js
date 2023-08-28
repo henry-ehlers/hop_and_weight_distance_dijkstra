@@ -1,7 +1,4 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.Edge = void 0;
-class Edge {
+export class Edge {
     constructor(source, target, weight) {
         this._SOURCE = String(source);
         this._TARGET = String(target);
@@ -20,5 +17,4 @@ class Edge {
         return this._WEIGHT;
     }
 }
-exports.Edge = Edge;
 ;

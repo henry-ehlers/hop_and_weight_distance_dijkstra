@@ -23,4 +23,8 @@ export class DistanceGraph {
     public getDistances(ego: string): Array<DistanceNode> {
         return this.distances.has(ego) ? this.distances.get(ego)! : [];
     }
+
+    public get EdgeList() {
+        return this.graph.Edges
+    }
 }

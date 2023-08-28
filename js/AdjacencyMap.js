@@ -1,7 +1,4 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.AdjacencyMap = void 0;
-class AdjacencyMap {
+export class AdjacencyMap {
     ;
     constructor(edgeList) {
         this.map = new Map();
@@ -33,4 +30,3 @@ class AdjacencyMap {
         return ([...this.map.keys()]);
     }
 }
-exports.AdjacencyMap = AdjacencyMap;

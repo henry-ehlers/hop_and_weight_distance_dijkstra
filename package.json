@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "browserify": "^17.0.0",
     "d3": "^7.8.5",
     "fs": "^0.0.1-security",
     "requirejs": "^2.3.6"

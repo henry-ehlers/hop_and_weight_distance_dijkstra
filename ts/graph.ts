@@ -14,10 +14,10 @@ export class Graph{
 
     public get Nodes(): Array<Node> {
         return this.nodes;
-    }
+    };
 
     public get Edges(): Array<Edge> {
         return this.edges;
-    }
+    };
 
 };

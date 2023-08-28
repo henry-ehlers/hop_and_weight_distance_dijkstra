@@ -58,7 +58,6 @@ export class Djikstra {
             this.weighted.set(neighbor, newWeighted);
             this.parents.set(neighbor, current);
         } else if ( newWeighted < this.weighted.get(current)! ) {
-            this.hop.set(neighbor, newHop);
             this.weighted.set(neighbor, newWeighted);
             this.parents.set(neighbor, current);
         }

@@ -1,8 +1,5 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.Djikstra = void 0;
-const DistanceNode_1 = require("./DistanceNode");
-class Djikstra {
+import { DistanceNode } from "./DistanceNode";
+export class Djikstra {
     constructor(ego, nodes) {
         this.weighted = new Map();
         this.hop = new Map();
@@ -30,7 +27,7 @@ class Djikstra {
             current = this.returnClosestVertex();
         }
         ;
-        return ([...this.hop.keys()].map(n => new DistanceNode_1.DistanceNode(n, this.ego, this.hop.get(n), this.weighted.get(n))));
+        return ([...this.hop.keys()].map(n => new DistanceNode(n, this.ego, this.hop.get(n), this.weighted.get(n))));
     }
     ;
     returnClosestVertex() {
@@ -58,11 +55,9 @@ class Djikstra {
             this.parents.set(neighbor, current);
         }
         else if (newWeighted < this.weighted.get(current)) {
-            this.hop.set(neighbor, newHop);
             this.weighted.set(neighbor, newWeighted);
             this.parents.set(neighbor, current);
         }
     }
     ;
 }
-exports.Djikstra = Djikstra;

@@ -12,4 +12,20 @@ export class DistanceNode {
         this._WEIGHTED = weight;
     };
 
+    public get weighted(): number {
+        return this._WEIGHTED;
+    };
+
+    public get hop(): number {
+        return this._HOP;
+    };
+
+    public get id(): string {
+        return this._ID;
+    };
+
+    public get ego(): string {
+        return this._EGO;
+    };
+
 }
