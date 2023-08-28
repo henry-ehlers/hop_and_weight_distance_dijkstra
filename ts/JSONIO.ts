@@ -6,7 +6,8 @@ export class JSONIO {
         const filePath: string = path + "/" + file;
         let jsonData: Array<string> = [];
         objects.forEach(d => jsonData.push(JSON.stringify(d)));
-        fs.writeFile(filePath, jsonData.toString(), function(err) {
+        fs.openSync(filePath, 'w');
+        fs.writeFile(filePath, "[" + jsonData.toString() + "]", function(err) {
             if (err) {
                 throw (err);
             };
@@ -18,4 +19,5 @@ export class JSONIO {
         const data = JSON.parse(fs.readFileSync(filePath).toString());
         return (data);
     };
+
 };

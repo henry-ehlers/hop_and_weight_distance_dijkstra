@@ -1,6 +1,12 @@
-import d3 from 'd3';
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.EgoMatrix = void 0;
+const d3_1 = __importDefault(require("d3"));
 // todo: extend prototype / abstract class with key properties across visualization approaches
-export class EgoMatrix {
+class EgoMatrix {
     constructor(edgeList, nodeList) {
         this.width = 500;
         this.height = 500;
@@ -20,15 +26,15 @@ export class EgoMatrix {
     }
     ;
     visualize(id) {
-        let x = d3.scaleBand()
+        let x = d3_1.default.scaleBand()
             .range([0, this.width])
             .domain(this.nodes.map(d => d.id))
             .padding(0.05);
-        let y = d3.scaleBand()
+        let y = d3_1.default.scaleBand()
             .range([0, this.height])
             .domain(this.nodes.map(d => d.id))
             .padding(0.05);
-        d3.select(id)
+        d3_1.default.select(id)
             .append('svg')
             .attr('width', this.width)
             .attr('height', this.height)
@@ -48,3 +54,4 @@ export class EgoMatrix {
     plot() { }
     ;
 }
+exports.EgoMatrix = EgoMatrix;

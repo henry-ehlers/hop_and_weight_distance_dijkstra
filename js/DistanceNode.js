@@ -1,4 +1,7 @@
-export class DistanceNode {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.DistanceNode = void 0;
+class DistanceNode {
     constructor(id, ego, hop, weight) {
         this._ID = id;
         this._EGO = ego;
@@ -23,3 +26,4 @@ export class DistanceNode {
     }
     ;
 }
+exports.DistanceNode = DistanceNode;
