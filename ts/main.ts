@@ -8,7 +8,7 @@ const distanceGraph = new DistanceGraph(graph);
 distanceGraph.computeDijkstraDistances("0");
 const egoNodes = distanceGraph.getEgocentricDistances("0");
 const edgeList = distanceGraph.EdgeList;
-const annotatedEdges = distanceGraph.getAnnotatedEdges();
+const annotatedEdges = distanceGraph.getAnnotatedEdges("0");
 JSONIO.writeObjectsToJSON(egoNodes, "simple.nodes.json", "./data");
 JSONIO.writeObjectsToJSON(annotatedEdges, "simple.annotated.edges.json", "./data");
 console.log(egoNodes);

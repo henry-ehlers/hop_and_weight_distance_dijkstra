@@ -18,10 +18,19 @@ class DistanceGraph {
     getEgocentricDistances(ego) {
         return this.distances.has(ego) ? this.distances.get(ego) : [];
     }
-    getAnnotatedEdges() {
+    getAnnotatedEdges(ego) {
         let annotatedEdges = [];
-        this.graph.Edges.forEach(e => annotatedEdges.push(new DistanceEdge_1.DistanceEdge(e.source, e.target, e.weight, Number(this.adjacency.getEdgeWeight(e.source, e.target)))));
+        this.graph.Edges.forEach(e => {
+            const hop = this.getHopDistance(ego, e.source, e.target);
+            annotatedEdges.push(new DistanceEdge_1.DistanceEdge(e.source, e.target, e.weight, hop), new DistanceEdge_1.DistanceEdge(e.target, e.source, e.weight, hop));
+        });
         return annotatedEdges;
+    }
+    getHopDistance(ego, source, target) {
+        // TODO: clean this up. currently makes a lot of assumptions
+        const sourceHop = this.distances.get(ego).filter(v => v.id == source)[0].hop;
+        const targetHop = this.distances.get(ego).filter(v => v.id == target)[0].hop;
+        return sourceHop == targetHop ? sourceHop : -1;
     }
     get EdgeList() {
         return this.graph.Edges;
