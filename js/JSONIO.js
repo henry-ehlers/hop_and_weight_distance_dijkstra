@@ -22,9 +22,17 @@ class JSONIO {
     static readObjectsFromJSON(file, path = ".") {
         const filePath = path + "/" + file;
         const data = JSON.parse(fs_1.default.readFileSync(filePath).toString());
-        return (data);
+        return data;
     }
     ;
+    static rescaleEdges(data) {
+        const maxWeight = Math.max(...data.map(d => d.weight));
+        console.log(maxWeight);
+        if (maxWeight > 1) {
+            data.forEach(d => d.weight = d.weight / maxWeight);
+        }
+        return data;
+    }
 }
 exports.JSONIO = JSONIO;
 ;

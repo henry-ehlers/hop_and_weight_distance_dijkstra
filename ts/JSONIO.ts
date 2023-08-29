@@ -1,4 +1,5 @@
 import fs from 'fs';
+import max from 'mathjs'
 
 export class JSONIO {
 
@@ -17,7 +18,15 @@ export class JSONIO {
     public static readObjectsFromJSON(file: string, path: string = "."): any {
         const filePath: string = path + "/" + file;
         const data = JSON.parse(fs.readFileSync(filePath).toString());
-        return (data);
+        return data;
     };
 
+    public static rescaleEdges(data: Array<any>): Array<object> {
+        const maxWeight = Math.max(...data.map(d => d.weight));
+        console.log(maxWeight);
+        if (maxWeight > 1) {
+            data.forEach(d => d.weight = d.weight / maxWeight);
+        } 
+        return data;
+    }
 };
