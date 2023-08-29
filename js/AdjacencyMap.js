@@ -32,5 +32,9 @@ class AdjacencyMap {
     getNodes() {
         return ([...this.map.keys()]);
     }
+    getEdgeWeight(source, target) {
+        var _a;
+        return (_a = this.map.get(source)) === null || _a === void 0 ? void 0 : _a.get(target);
+    }
 }
 exports.AdjacencyMap = AdjacencyMap;

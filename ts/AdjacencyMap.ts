@@ -34,4 +34,8 @@ export class AdjacencyMap {
     public getNodes(): Array<string> {
         return( [...this.map.keys()] );
     }
+
+    public getEdgeWeight(source: string, target: string): number | undefined {
+        return this.map.get(source)?.get(target);
+    }
 }
