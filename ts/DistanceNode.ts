@@ -1,31 +1,31 @@
 export class DistanceNode {
 
-    private readonly _ID: string;
-    private readonly _EGO: string;
-    private readonly _HOP: number;
-    private readonly _WEIGHTED: number;
+    private readonly id: string;
+    private readonly ego: string;
+    private readonly hop: number;
+    private readonly weighted: number;
 
     public constructor(id: string, ego: string, hop: number, weight: number) {
-        this._ID = id;
-        this._EGO = ego;
-        this._HOP = hop;
-        this._WEIGHTED = weight;
+        this.id = id;
+        this.ego = ego;
+        this.hop = hop;
+        this.weighted = weight;
     };
 
-    public get weighted(): number {
-        return this._WEIGHTED;
+    public get Weighted(): number {
+        return this.weighted;
     };
 
-    public get hop(): number {
-        return this._HOP;
+    public get Hop(): number {
+        return this.hop;
     };
 
-    public get id(): string {
-        return this._ID;
+    public get ID(): string {
+        return this.id;
     };
 
-    public get ego(): string {
-        return this._EGO;
+    public get Ego(): string {
+        return this.ego;
     };
 
 }

@@ -1,13 +1,13 @@
 export class DistanceEdge {
-    private readonly _SOURCE: string;
-    private readonly _TARGET: string;
-    private readonly _WEIGHT: number;
-    private readonly _HOP: number;
+    private readonly source: string;
+    private readonly target: string;
+    private readonly weight: number;
+    private readonly hop: number;
 
     public constructor(source: string, target: string, weight: number, hop: number) {
-        this._SOURCE = source;
-        this._TARGET = target;
-        this._WEIGHT = weight;
-        this._HOP = hop;
+        this.source = source;
+        this.target = target;
+        this.weight = weight;
+        this.hop = hop;
     }
 }

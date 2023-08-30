@@ -28,8 +28,8 @@ class DistanceGraph {
     }
     getHopDistance(ego, source, target) {
         // TODO: clean this up. currently makes a lot of assumptions
-        const sourceHop = this.distances.get(ego).filter(v => v.id == source)[0].hop;
-        const targetHop = this.distances.get(ego).filter(v => v.id == target)[0].hop;
+        const sourceHop = this.distances.get(ego).filter(v => v.ID == source)[0].Hop;
+        const targetHop = this.distances.get(ego).filter(v => v.ID == target)[0].Hop;
         return sourceHop == targetHop ? sourceHop : -1;
     }
     get EdgeList() {

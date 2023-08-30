@@ -3,26 +3,26 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.DistanceNode = void 0;
 class DistanceNode {
     constructor(id, ego, hop, weight) {
-        this._ID = id;
-        this._EGO = ego;
-        this._HOP = hop;
-        this._WEIGHTED = weight;
+        this.id = id;
+        this.ego = ego;
+        this.hop = hop;
+        this.weighted = weight;
     }
     ;
-    get weighted() {
-        return this._WEIGHTED;
+    get Weighted() {
+        return this.weighted;
     }
     ;
-    get hop() {
-        return this._HOP;
+    get Hop() {
+        return this.hop;
     }
     ;
-    get id() {
-        return this._ID;
+    get ID() {
+        return this.id;
     }
     ;
-    get ego() {
-        return this._EGO;
+    get Ego() {
+        return this.ego;
     }
     ;
 }
