@@ -22,7 +22,7 @@ class DistanceGraph {
         let annotatedEdges = [];
         this.graph.Edges.forEach(e => {
             const hop = this.getHopDistance(ego, e.source, e.target);
-            annotatedEdges.push(new DistanceEdge_1.DistanceEdge(e.source, e.target, e.weight, hop), new DistanceEdge_1.DistanceEdge(e.target, e.source, e.weight, hop));
+            annotatedEdges.push(new DistanceEdge_1.DistanceEdge(e.source, e.target, e.weight, ego, hop), new DistanceEdge_1.DistanceEdge(e.target, e.source, e.weight, ego, hop));
         });
         return annotatedEdges;
     }
