@@ -22,6 +22,10 @@ class DistanceGraph {
         let annotatedEdges = [];
         this.graph.Edges.forEach(e => {
             const hop = this.getHopDistance(ego, e.source, e.target);
+            if (e.source == "Thenardier" || e.target == "Thenardier") {
+                console.log(e.source + " - " + e.target);
+                console.log("hop: " + hop);
+            }
             annotatedEdges.push(new DistanceEdge_1.DistanceEdge(e.source, e.target, e.weight, ego, hop), new DistanceEdge_1.DistanceEdge(e.target, e.source, e.weight, ego, hop));
         });
         return annotatedEdges;
@@ -30,6 +34,12 @@ class DistanceGraph {
         // TODO: clean this up. currently makes a lot of assumptions
         const sourceHop = this.distances.get(ego).filter(v => v.ID == source)[0].Hop;
         const targetHop = this.distances.get(ego).filter(v => v.ID == target)[0].Hop;
+        if (ego == "Thenardier" || source == "Thenardier") {
+            console.log(source + " - " + target);
+            console.log("source hop: " + sourceHop);
+            console.log("target hop: " + targetHop);
+        }
+        console.log("HERE");
         return sourceHop == targetHop ? sourceHop : -1;
     }
     get EdgeList() {
