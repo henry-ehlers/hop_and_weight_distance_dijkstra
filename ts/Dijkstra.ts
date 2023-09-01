@@ -12,7 +12,7 @@ export class Djikstra {
     constructor(ego: string, nodes: Set<string> | Array<string>){
         nodes.forEach(d => d == ego ? this.hop.set(d, 0) : this.hop.set(d, Number.MAX_SAFE_INTEGER));
         nodes.forEach(d => d == ego ? this.weighted.set(d, 0) : this.weighted.set(d, Number.MAX_VALUE));
-        nodes.forEach(d => d == ego ? this.parents.set(d, d) : this.parents.set(d, undefined));
+        nodes.forEach(d => d == ego ? this.parents.set(d, '') : this.parents.set(d, undefined));
         this.unvisited = new Set(this.hop.keys());
         this.ego = ego;
     };
@@ -32,7 +32,7 @@ export class Djikstra {
             };
             current = this.returnClosestVertex();
         };
-        return ( [...this.hop.keys()].map(n => new DistanceNode(n, this.ego, this.hop.get(n)!, this.weighted.get(n)!)) );
+        return ( [...this.hop.keys()].map(n => new DistanceNode(n, this.ego, this.hop.get(n)!, this.weighted.get(n)!, this.parents.get(n)!)) );
 
     };
 
