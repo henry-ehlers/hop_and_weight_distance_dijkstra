@@ -27,5 +27,8 @@ class DistanceNode {
         return this.ego;
     }
     ;
+    get Index() {
+        return this.index;
+    }
 }
 exports.DistanceNode = DistanceNode;

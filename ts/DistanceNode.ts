@@ -32,4 +32,8 @@ export class DistanceNode {
         return this.ego;
     };
 
+    public get Index(): number {
+        return this.index;
+    }
+
 }
