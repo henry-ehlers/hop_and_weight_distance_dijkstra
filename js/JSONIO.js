@@ -27,7 +27,6 @@ class JSONIO {
     ;
     static rescaleEdges(data) {
         const maxWeight = Math.max(...data.map(d => d.weight));
-        console.log(maxWeight);
         if (maxWeight > 1) {
             data.forEach(d => d.weight = d.weight / maxWeight);
         }

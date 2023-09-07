@@ -18,9 +18,11 @@ export class AdjacencyMap {
             this.map.set(a, new Map());
         };
         if (this.map.get(a)!.has(b)) {
-            throw "Attemped to Map Non-Unique Edge. Please ensure all edges in input edge list are unique."
+            this.map.get(a)!.set(b, this.map.get(a)!.get(b)! + w);
+        } else {
+            this.map.get(a)!.set(b, w);
         }
-        this.map.get(a)!.set(b, w);
+        
     }
 
     public getVertexAdjacency(vertex: string): Array<string> {
