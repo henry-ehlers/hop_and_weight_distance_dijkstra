@@ -30,7 +30,7 @@ class Djikstra {
             current = this.returnClosestVertex();
         }
         ;
-        return ([...this.hop.keys()].map(n => new DistanceNode_1.DistanceNode(n, this.ego, this.hop.get(n), this.weighted.get(n), this.parents.get(n))));
+        return ([...this.hop.keys()].map((n, i) => new DistanceNode_1.DistanceNode(n, i, this.ego, this.hop.get(n), this.weighted.get(n), this.parents.get(n))));
     }
     ;
     returnClosestVertex() {

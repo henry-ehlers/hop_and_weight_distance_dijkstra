@@ -1,13 +1,15 @@
 export class DistanceNode {
 
     private readonly id: string;
+    private readonly index: number;
     private readonly ego: string;
     private readonly hop: number;
     private readonly weighted: number;
     private readonly parent: string;
 
-    public constructor(id: string, ego: string, hop: number, weight: number, parent: string) {
+    public constructor(id: string, index:number, ego: string, hop: number, weight: number, parent: string) {
         this.id = id;
+        this.index = index;
         this.ego = ego;
         this.hop = hop;
         this.weighted = weight;

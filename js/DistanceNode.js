@@ -2,8 +2,9 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.DistanceNode = void 0;
 class DistanceNode {
-    constructor(id, ego, hop, weight, parent) {
+    constructor(id, index, ego, hop, weight, parent) {
         this.id = id;
+        this.index = index;
         this.ego = ego;
         this.hop = hop;
         this.weighted = weight;
