@@ -31,11 +31,9 @@ export class DistanceGraph {
         let annotatedEdges:Array<DistanceEdge> = [];
         this.graph.Edges.forEach(e => {
             const hop = this.getHopDistance(ego, e.source, e.target);
-            const sourceIndex = this.getVertexIndex(ego, e.source);
-            const targetIndex = this.getVertexIndex(ego, e.target);
             annotatedEdges.push(
-                new DistanceEdge( e.source, e.target, sourceIndex, targetIndex, e.weight, ego, hop),
-                new DistanceEdge( e.target, e.source, targetIndex, sourceIndex, e.weight, ego, hop)
+                new DistanceEdge( e.source, e.target, e.weight, ego, hop ),
+                new DistanceEdge( e.target, e.source, e.weight, ego, hop )
             );
         });
         return annotatedEdges;
@@ -48,9 +46,9 @@ export class DistanceGraph {
         return sourceHop == targetHop ? sourceHop : -1
     }
     
-    private getVertexIndex(ego: string, vertex: string): number {
-        return this.distances.get(ego)!.filter(v => v.ID == vertex)[0].Index;
-    }
+    // private getVertexIndex(ego: string, vertex: string): number {
+    //     return this.distances.get(ego)!.filter(v => v.ID == vertex)[0].Index;
+    // }
 
     public get EdgeList() {
         return this.graph.Edges

@@ -2,8 +2,8 @@ import { JSONIO } from "./JSONIO";
 import { Graph } from "./Graph";
 import { DistanceGraph } from "./DistanceGraph";
 
-const inputFileName: string = 'soc-firm-hi-tech';
-const ego: string = '10';
+const inputFileName: string = 'miserables.3848446828006397221';
+const ego: string = '35';
 const data = JSONIO.rescaleEdges(JSONIO.readObjectsFromJSON(inputFileName + ".edges.json", "data"));
 
 const graph = new Graph(data);
